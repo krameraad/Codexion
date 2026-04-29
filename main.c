@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/04/29 22:36:41 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/04/29 23:42:44 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	main(int argc, char const *argv[])
 	t_context	*ctx;
 
 	if (argc != 9)
-		return (fprintf(stderr, ESC_R "Number of arguments must be 8.\n"), 1);
+		return (error(ERR_ARGC, "main"), 1);
 	ctx = context_new(argv);
 	if (ctx == NULL)
-		return (fprintf(stderr, ESC_R "Arguments are invalid.\n"), 1);
+		return (1);
 	return (0);
 }

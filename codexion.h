@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/04/29 22:36:41 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/04/29 23:49:36 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 
 /* Red terminal formatting. */
 # define ESC_R "\033[91m"
+/* Remove terminal formatting. */
+# define ESC_X "\033[0m"
+
+# define ERR_MEM "Failed to allocate memory."
+# define ERR_ARGC "Number of arguments must be 8."
+# define ERR_ARGV "Arguments are invalid (must be ints above 0 and fifo/edf)."
 
 typedef enum e_coderstate
 {
@@ -94,10 +100,14 @@ int			atou(char const *s);
 /* Return scheduler as an enum `t_scheduler`. If invalid, return `NONE`. */
 t_scheduler	get_scheduler(char const *s);
 
-/* Initialize the context using arguments from the command line. */
+/* Initialize the context using arguments from the command line.
+Can fail, in which case it returns `NULL` and prints a message. */
 t_context	*context_new(char const **args);
 
 /* Print the context's values. */
 void		context_print(t_context *ctx);
+
+/* Print an error message with the function that failed and return 1. */
+int			error(char const *msg, char const *func);
 
 #endif

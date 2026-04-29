@@ -3,7 +3,7 @@ NAME = codexion
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
 
-SRC = main.c validate.c context.c
+SRC = main.c validate.c context.c error.c
 OBJ = $(SRC:.c=.o)
 
 

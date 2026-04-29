@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 22:00:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/04/29 22:36:41 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/04/29 23:43:15 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_context	*context_new(char const **args)
 
 	ctx = malloc(sizeof(t_context));
 	if (ctx == NULL)
-		return (NULL);
+		return (error(ERR_MEM, "context_new"), NULL);
 	ctx->number_of_coders = atou(args[1]);
 	ctx->time_to_burnout = atou(args[2]);
 	ctx->time_to_compile = atou(args[3]);
@@ -55,6 +55,6 @@ t_context	*context_new(char const **args)
 	ctx->dongle_cooldown = atou(args[7]);
 	ctx->scheduler = get_scheduler(args[8]);
 	if (!context_validate(ctx))
-		return (free(ctx), NULL);
+		return (error(ERR_ARGV, "context_new"), free(ctx), NULL);
 	return (ctx);
 }
