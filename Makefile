@@ -1,10 +1,11 @@
 NAME = codexion
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread
 
-SRC = main.c
+SRC = main.c validate.c context.c
 OBJ = $(SRC:.c=.o)
+
 
 # Commands
 # -----------------------------------------------------------------------------
@@ -19,8 +20,12 @@ fclean: clean
 
 re: fclean all
 
+
 # Test commands
 # -----------------------------------------------------------------------------
+
+run: $(NAME)
+	./$(NAME) 5 1000 250 250 250 10 100 fifo
 
 test: norm valgrind
 
@@ -32,10 +37,12 @@ valgrind: all
 	@echo ""
 	valgrind --leak-check=full ./$(NAME)
 
+
 # Phonies
 # -----------------------------------------------------------------------------
 
 .PHONY: all clean fclean re test norm valgrind
+
 
 # Files
 # -----------------------------------------------------------------------------
