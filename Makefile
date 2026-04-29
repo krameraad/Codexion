@@ -1,10 +1,7 @@
 NAME = codexion
 
-DIR_LIBFT = libft/
-LIBFT = $(DIR_LIBFT)libft.a
-
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I./libft
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c
 OBJ = $(SRC:.c=.o)
@@ -16,11 +13,9 @@ all: $(OBJ) $(NAME)
 
 clean:
 	rm -f $(OBJ)
-	$(MAKE) clean -C $(DIR_LIBFT)
 
 fclean: clean
-	rm -f $(NAME) $(ARGGEN)
-	$(MAKE) fclean -C $(DIR_LIBFT)
+	rm -f $(NAME)
 
 re: fclean all
 
@@ -48,8 +43,5 @@ valgrind: all
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $^ -o $@
-
-$(LIBFT):
-	$(MAKE) -C $(DIR_LIBFT)
