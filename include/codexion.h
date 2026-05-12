@@ -6,12 +6,30 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/04/29 23:49:36 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/12 15:27:14 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
+
+/*
+# External functions:
+## Threads
+- pthread_create, pthread_join
+
+## Mutexes
+- pthread_mutex_init, pthread_mutex_lock,
+pthread_mutex_unlock, pthread_mutex_destroy
+
+## Condition variables
+- pthread_cond_init, pthread_cond_wait, pthread_cond_timedwait,
+pthread_cond_broadcast, pthread_cond_destroy
+
+## General use
+- gettimeofday, usleep, write, malloc, free,
+printf, fprintf, strcmp, strlen, atoi, memset
+*/
 
 # define _DEFAULT_SOURCE
 # include <unistd.h>
@@ -31,8 +49,12 @@
 # define ERR_ARGC "Number of arguments must be 8."
 # define ERR_ARGV "Arguments are invalid (must be ints above 0 and fifo/edf)."
 
+// ENUMS
+// ----------------------------------------------------------------------------
+
 typedef enum e_coderstate
 {
+	FREE,
 	COMPILING,
 	DEBUGGING,
 	REFACTORING
@@ -44,6 +66,9 @@ typedef enum e_scheduler
 	FIFO,
 	EDF
 }	t_scheduler;
+
+// STRUCTS
+// ----------------------------------------------------------------------------
 
 typedef struct s_context
 {
@@ -75,7 +100,7 @@ typedef struct s_context
 	int			dongle_cooldown;
 
 	/* Arbitration policy used by dongles to decide who gets them
-	when multiple coders request them.
+	when multiple coders request a dongle.
 	- fifo: Coder whose request arrived first. 
 	- edf: Earliest deadline first, with
 	deadline = `last_compile_start` + `time_to_burnout` */
@@ -94,20 +119,33 @@ typedef struct s_dongle
 	bool	available;
 }	t_dongle;
 
+// GET.C
+// ----------------------------------------------------------------------------
+
 /* Return `s` as an int if it's a valid unsigned integer, else -1. */
 int			atou(char const *s);
-
 /* Return scheduler as an enum `t_scheduler`. If invalid, return `NONE`. */
 t_scheduler	get_scheduler(char const *s);
+
+// CONTEXT.C
+// ----------------------------------------------------------------------------
 
 /* Initialize the context using arguments from the command line.
 Can fail, in which case it returns `NULL` and prints a message. */
 t_context	*context_new(char const **args);
-
 /* Print the context's values. */
 void		context_print(t_context *ctx);
 
+// ERROR.C
+// ----------------------------------------------------------------------------
+
 /* Print an error message with the function that failed and return 1. */
 int			error(char const *msg, char const *func);
+
+// TIME.C
+// ----------------------------------------------------------------------------
+
+/* Returns a `time_t` value that represents a timestamp in milliseconds. */
+time_t		timestamp();
 
 #endif

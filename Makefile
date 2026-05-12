@@ -1,10 +1,22 @@
-NAME = codexion
+NAME = bin/codexion
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
 
-SRC = main.c validate.c context.c error.c
-OBJ = $(SRC:.c=.o)
+DIR_SRC := src
+DIR_OBJ := obj
+SRC := \
+	src/context.c \
+	src/error.c \
+	src/get.c \
+	src/main.c \
+	src/time.c
+OBJ := \
+	obj/context.o \
+	obj/error.o \
+	obj/get.o \
+	obj/main.o \
+	obj/time.o
 
 
 # Commands
@@ -31,7 +43,7 @@ test: norm valgrind
 
 norm:
 	@echo ""
-	norminette -RCheckForbiddenSourceHeader $(SRC) $(NAME).h
+	norminette -RCheckForbiddenSourceHeader src include
 
 valgrind: all
 	@echo ""
@@ -47,8 +59,10 @@ valgrind: all
 # Files
 # -----------------------------------------------------------------------------
 
-%.o: %.c
+obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $^ -o $@

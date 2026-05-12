@@ -6,29 +6,11 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/04/29 23:42:44 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/09 19:55:18 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-# External functions:
-## Threads
-- pthread_create, pthread_join
-
-## Mutexes
-- pthread_mutex_init, pthread_mutex_lock,
-pthread_mutex_unlock, pthread_mutex_destroy
-
-## Condition variables
-- pthread_cond_init, pthread_cond_wait, pthread_cond_timedwait,
-pthread_cond_broadcast, pthread_cond_destroy
-
-## General use
-- gettimeofday, usleep, write, malloc, free,
-printf, fprintf, strcmp, strlen, atoi, memset
-*/
-
-#include "codexion.h"
+#include "../include/codexion.h"
 
 int	main(int argc, char const *argv[])
 {

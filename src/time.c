@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error.c                                            :+:    :+:            */
+/*   time.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2026/04/29 23:17:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/04/29 23:49:26 by ekramer       ########   odam.nl         */
+/*   Created: 2026/05/12 14:57:49 by ekramer       #+#    #+#                 */
+/*   Updated: 2026/05/12 15:18:57 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "codexion.h"
+#include "../include/codexion.h"
 
-int	error(char const *msg, char const *func)
+time_t	timestamp()
 {
-	fprintf(
-		stderr,
-		ESC_R "Error in function \"%s\":\n\t%s\n" ESC_X,
-		func, msg
-		);
-	return (1);
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
