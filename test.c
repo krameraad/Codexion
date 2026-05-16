@@ -7,6 +7,10 @@
 #include <sys/time.h>
 #include <pthread.h>
 
+#define ESC_X "\033[0m"
+#define ESC_R "\033[91m"
+#define ESC_G "\033[92m"
+
 typedef struct 
 {
 	size_t i;
@@ -17,26 +21,28 @@ typedef struct
 {
 	int *items;
 	size_t count;
-	size_t capacity;
-	pthread_mutex_t mtx;
-	pthread_cond_t cond;
+	pthread_mutex_t mutex;
+	pthread_cond_t condition;
 }	DataStream;
-
-
-
 
 void *producer(void *arg)
 {
 	DataStream *ds = arg;
-	unsigned long id = (unsigned long)pthread_self();
+	unsigned long id = (unsigned long)pthread_self() % 10000;
+	int n;
 
-	for (size_t i = 0; i < 1000; ++i)
+	for (size_t i = 0; i < 100; ++i)
 	{
-		
-		pthread_mutex_lock(&ds->mtx);
+		pthread_mutex_lock(&ds->mutex);
+
+		n = rand() / 1000;
+		ds->items[ds->count] = n;
 		ds->count += 1;
-		printf("Thread %lu produced: %zu\n", id, ds->items[0]);
-		pthread_mutex_unlock(&ds->mtx);
+		printf(ESC_G "%4lu produced: %7zu (count: %4zu)\n" ESC_X,
+			id, n, ds->count);
+
+		pthread_cond_broadcast(&ds->condition);
+		pthread_mutex_unlock(&ds->mutex);
 	}
 	return NULL;
 }
@@ -44,40 +50,47 @@ void *producer(void *arg)
 void *consumer(void *arg)
 {
 	DataStream *ds = arg;
-	unsigned long id = (unsigned long)pthread_self();
+	unsigned long id = (unsigned long)pthread_self() % 10000;
 
-	for (size_t i = 0; i < 1000; ++i)
+	for (size_t i = 0; i < 100; ++i)
 	{
-		pthread_mutex_lock(&ds->mtx);
+		pthread_mutex_lock(&ds->mutex);
+		while (ds->count < 1)
+			pthread_cond_wait(&ds->condition, &ds->mutex);
+
 		ds->count -= 1;
-		printf("%lu: %zu\n", id, ds->items[0]);
-		pthread_mutex_unlock(&ds->mtx);
+		printf(ESC_R "%4lu consumed: %7d (count: %4zu)\n" ESC_X,
+			id, ds->items[ds->count + 1], ds->count);
+
+		pthread_mutex_unlock(&ds->mutex);
 	}
 	return NULL;
 }
 
 int main(int argc, char const *argv[])
 {
-	pthread_t threads[10];
-	ThreadCounter tc = {0};
+	pthread_t threads[20];
+	DataStream ds = {0};
+	ds.items = malloc(4000);
 	srand(time(NULL));
 
-	pthread_mutex_init(&tc.mtx, NULL);
-	printf("%zu\n", tc.i); fflush(stdout);
+	pthread_mutex_init(&ds.mutex, NULL);
+	pthread_cond_init(&ds.condition, NULL);
 
 	for (size_t i = 0; i < 10; ++i)
 	{
-		if (pthread_create(&threads[i], NULL, &producer, &tc))
-		{
-			fprintf(stderr, "Error creating threads");
-			return 1;
-		}
+		if (pthread_create(&threads[i], NULL, &producer, &ds))
+			return (fprintf(stderr, "Error creating producer thread"), 1);
+		if (pthread_create(&threads[i], NULL, &consumer, &ds))
+			return (fprintf(stderr, "Error creating consumer thread"), 1);
 	}
-	for (size_t i = 0; i < 10; ++i)
+	for (size_t i = 0; i < 20; ++i)
 		pthread_join(threads[i], NULL);
+	printf("%zu\n", ds.count);
 
-	pthread_mutex_destroy(&tc.mtx);
-	printf("%zu\n", tc.i);
+	pthread_mutex_destroy(&ds.mutex);
+	pthread_cond_destroy(&ds.condition);
+	free(ds.items);
 	return 0;
 }
 

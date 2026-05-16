@@ -1,7 +1,7 @@
-NAME = bin/codexion
+NAME := bin/codexion
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -pthread
 
 DIR_SRC := src
 DIR_OBJ := obj
@@ -11,12 +11,7 @@ SRC := \
 	src/get.c \
 	src/main.c \
 	src/time.c
-OBJ := \
-	obj/context.o \
-	obj/error.o \
-	obj/get.o \
-	obj/main.o \
-	obj/time.o
+OBJ := $(SRC:src/%.c=obj/%.o)
 
 
 # Commands
@@ -59,10 +54,14 @@ valgrind: all
 # Files
 # -----------------------------------------------------------------------------
 
-obj/%.o: src/%.c
+obj/%.o: src/%.c obj
 	$(CC) $(CFLAGS) -c $< -o $@
 
+obj:
+	mkdir obj
 
+$(NAME): $(OBJ) bin
+	$(CC) $(CFLAGS) $(OBJ) -o $@
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+bin:
+	mkdir bin

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/12 15:27:14 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/15 14:11:07 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,6 @@ int			error(char const *msg, char const *func);
 // ----------------------------------------------------------------------------
 
 /* Returns a `time_t` value that represents a timestamp in milliseconds. */
-time_t		timestamp();
+time_t		timestamp(void);
 
 #endif
