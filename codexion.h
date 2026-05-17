@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/15 14:11:07 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/17 20:30:58 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,15 @@ typedef struct s_context
 typedef struct s_coder
 {
 	t_coderstate	state;
+	size_t			compiles;
 	struct s_coder	*prev;
 	struct s_coder	*next;
 }	t_coder;
+
+typedef struct s_coderinfo
+{
+	size_t	id;
+}	t_coderinfo;
 
 typedef struct s_dongle
 {
