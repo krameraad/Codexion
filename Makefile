@@ -3,8 +3,6 @@ NAME := bin/codexion
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -pthread
 
-DIR_SRC := src
-DIR_OBJ := obj
 SRC := \
 	src/context.c \
 	src/error.c \
@@ -17,13 +15,13 @@ OBJ := $(SRC:src/%.c=obj/%.o)
 # Commands
 # -----------------------------------------------------------------------------
 
-all: $(OBJ) $(NAME)
+all: $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	rm -rf obj
 
 fclean: clean
-	rm -f $(NAME)
+	rm -rf bin
 
 re: fclean all
 
@@ -34,34 +32,46 @@ re: fclean all
 run: $(NAME)
 	./$(NAME) 5 1000 250 250 250 10 100 fifo
 
-test: norm valgrind
+test: norm valgrind helgrind drd
 
 norm:
-	@echo ""
-	norminette -RCheckForbiddenSourceHeader src include
+	@echo "\033[1;96m\nNORMINETTE"
+	@echo "--------------------------------------------------------------------------------\033[0m"
+	@norminette -RCheckForbiddenSourceHeader codexion.h src
 
-valgrind: all
-	@echo ""
-	valgrind --leak-check=full ./$(NAME)
+valgrind: $(NAME)
+	@echo "\033[1;96m\nVALGRIND"
+	@echo "--------------------------------------------------------------------------------\033[0m"
+	@valgrind --leak-check=full ./$(NAME)
+
+helgrind: $(NAME)
+	@echo "\033[1;96m\nHELGRIND"
+	@echo "--------------------------------------------------------------------------------\033[0m"
+	@valgrind --tool=helgrind ./$(NAME)
+
+drd: $(NAME)
+	@echo "\033[1;96m\nDRD"
+	@echo "--------------------------------------------------------------------------------\033[0m"
+	@valgrind --tool=drd ./$(NAME)
 
 
 # Phonies
 # -----------------------------------------------------------------------------
 
-.PHONY: all clean fclean re test norm valgrind
+.PHONY: all clean fclean re test norm valgrind helgrind drd
 
 
 # Files
 # -----------------------------------------------------------------------------
 
-obj/%.o: src/%.c obj
+obj/%.o: src/%.c | obj
 	$(CC) $(CFLAGS) -c $< -o $@
 
 obj:
-	mkdir obj
+	mkdir -p obj
 
-$(NAME): $(OBJ) bin
+$(NAME): $(OBJ) | bin
 	$(CC) $(CFLAGS) $(OBJ) -o $@
 
 bin:
-	mkdir bin
+	mkdir -p bin

@@ -6,11 +6,11 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 22:00:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/09 19:55:33 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/17 18:57:54 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/codexion.h"
+#include "../codexion.h"
 
 /* Validate that the context contains correct values. */
 static bool	context_validate(t_context *ctx)

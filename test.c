@@ -38,7 +38,7 @@ void *producer(void *arg)
 		n = rand() / 1000;
 		ds->items[ds->count] = n;
 		ds->count += 1;
-		printf(ESC_G "%4lu produced: %7zu (count: %4zu)\n" ESC_X,
+		printf(ESC_G "%4lu produced: %7d (count: %4zu)\n" ESC_X,
 			id, n, ds->count);
 
 		pthread_cond_broadcast(&ds->condition);

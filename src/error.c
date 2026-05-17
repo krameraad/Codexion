@@ -6,11 +6,11 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 23:17:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/09 19:55:31 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/17 18:57:52 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/codexion.h"
+#include "../codexion.h"
 
 int	error(char const *msg, char const *func)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   validate.c                                         :+:    :+:            */
+/*   get.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:53:06 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/09 19:55:35 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/17 18:57:49 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/codexion.h"
+#include "../codexion.h"
 
 /* Return `true` if `c` is in `s`, else `false`. */
 static bool	is_in(char c, char const *s)
