@@ -9,6 +9,7 @@ SRC := \
 	src/error.c \
 	src/get.c \
 	src/main.c \
+	src/setup.c \
 	src/time.c
 OBJ := $(SRC:src/%.c=obj/%.o)
 

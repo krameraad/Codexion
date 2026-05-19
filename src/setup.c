@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   time.c                                             :+:    :+:            */
+/*   setup.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2026/05/12 14:57:49 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/19 18:35:07 by ekramer       ########   odam.nl         */
+/*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
+/*   Updated: 2026/05/19 19:08:43 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
-time_t	timestamp(void)
+t_coder	*setup_coders(t_context ctx)
 {
-	static time_t	offset = 0;
-	time_t			delta;
-	struct timeval	tv;
+	t_coder	*coders;
+	int		i;
 
-	gettimeofday(&tv, NULL);
-	delta = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	if (!offset)
-		offset = delta;
-	delta -= offset;
-	return (delta);
+	coders = malloc(ctx.number_of_coders * sizeof(t_coder));
+	if (!coders)
+		return (error(ERR_MEM, "setup_coders"), NULL);
+	i = 0;
+	while (i < ctx.number_of_coders)
+	{
+		coders[i] = (t_coder){0, i, FREE, 0};
+		++i;
+	}
+	return (coders);
 }

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/19 13:07:35 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/19 19:19:04 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ printf, fprintf, strcmp, strlen, atoi, memset
 # define ERR_ARGC "Number of arguments must be 8."
 # define ERR_ARGV "Arguments are invalid (must be ints above 0 and fifo/edf)."
 
-// ENUMS
-// ----------------------------------------------------------------------------
-
+// ENUMS ----------------------------------------------------------------------
 typedef enum e_coderstate
 {
 	FREE,
@@ -67,9 +65,8 @@ typedef enum e_scheduler
 	EDF
 }	t_scheduler;
 
-// STRUCTS
-// ----------------------------------------------------------------------------
-
+// STRUCTS --------------------------------------------------------------------
+/* Contains general info for the simulation. */
 typedef struct s_context
 {
 	/* Number of coders. Also the number of dongles. */
@@ -107,6 +104,7 @@ typedef struct s_context
 	t_scheduler	scheduler;
 }	t_context;
 
+/* Represents the info of coders. */
 typedef struct s_coder
 {
 	pthread_t		thread;
@@ -120,38 +118,33 @@ typedef struct s_dongle
 	bool	available;
 }	t_dongle;
 
-// CODER.C
-// ----------------------------------------------------------------------------
-
+// CODER.C --------------------------------------------------------------------
 /* Coder function loop. */
 void		*coder(void *arg);
 
-// CONTEXT.C
-// ----------------------------------------------------------------------------
-
+// CONTEXT.C ------------------------------------------------------------------
 /* Initialize the context using arguments from the command line.
 Can fail, in which case it returns `NULL` and prints a message. */
 t_context	*context_new(char const **args);
 /* Print the context's values. */
 void		context_print(t_context *ctx);
 
-// ERROR.C
-// ----------------------------------------------------------------------------
-
+// ERROR.C --------------------------------------------------------------------
 /* Print an error message with the function that failed and return 1. */
 int			error(char const *msg, char const *func);
 
-// GET.C
-// ----------------------------------------------------------------------------
-
+// GET.C ----------------------------------------------------------------------
 /* Return `s` as an int if it's a valid unsigned integer, else -1. */
 int			atou(char const *s);
 /* Return scheduler as an enum `t_scheduler`. If invalid, return `NONE`. */
 t_scheduler	get_scheduler(char const *s);
 
-// TIME.C
-// ----------------------------------------------------------------------------
+// SETUP.C --------------------------------------------------------------------
+/* Return an array of coders made from the arguments in `ctx`.
+Can fail, in which case it returns `NULL` and prints a message. */
+t_coder		*setup_coders(t_context ctx);
 
+// TIME.C ---------------------------------------------------------------------
 /* Returns a `time_t` value that represents a timestamp in milliseconds. */
 time_t		timestamp(void);
 
