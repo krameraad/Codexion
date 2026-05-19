@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/17 20:15:41 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/19 13:15:44 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 int	main(int argc, char const *argv[])
 {
 	t_context	*ctx;
-	int			i;
+	t_coder		coders[10] = {
+		{0}, {0}, {0}, {0}, {0},
+		{0}, {0}, {0}, {0}, {0}};
 
+	
 	if (argc != 9)
 		return (error(ERR_ARGC, "main"), 1);
 	ctx = context_new(argv);
 	if (ctx == NULL)
 		return (1);
-	i = 0;
-	while ()
+	for (size_t i = 0; i < 10; ++i)
+		if (pthread_create(&coders[i].thread, NULL, &coder, &coders[i].thread))
+			return (fprintf(stderr, "Error thread"), 1);
+	for (size_t i = 0; i < 10; ++i)
+		pthread_join(coders[i].thread, NULL);
 	return (0);
 }

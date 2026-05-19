@@ -4,6 +4,7 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror -pthread
 
 SRC := \
+	src/coder.c \
 	src/context.c \
 	src/error.c \
 	src/get.c \
