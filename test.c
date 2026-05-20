@@ -53,7 +53,7 @@ void *consumer(void *arg)
 	unsigned long id = (unsigned long)pthread_self() % 10000;
 
 	for (size_t i = 0; i < 100; ++i)
-	{
+	{	
 		pthread_mutex_lock(&ds->mutex);
 		while (ds->count < 1)
 			pthread_cond_wait(&ds->condition, &ds->mutex);

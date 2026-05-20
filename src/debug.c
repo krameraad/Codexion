@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   setup.c                                            :+:    :+:            */
+/*   debug.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/20 14:42:21 by ekramer       ########   odam.nl         */
+/*   Created: 2026/05/20 14:45:30 by ekramer       #+#    #+#                 */
+/*   Updated: 2026/05/20 14:55:07 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
-t_coder	*setup_coders(t_context *ctx)
+void	coder_print(t_coder *coder)
 {
-	t_coder	*coders;
-	int		i;
-
-	coders = malloc(ctx->number_of_coders * sizeof(t_coder));
-	if (!coders)
-		return (error(ERR_MEM, "setup_coders"), NULL);
-	i = 0;
-	while (i < ctx->number_of_coders)
-	{
-		coders[i] = (t_coder){0, i, FREE, 0, 0, ctx};
-		++i;
-	}
-	return (coders);
+	printf(
+		"Coder: %lu, thread id: %lu\nState: %d\n"
+		"Compiles: %lu, last compile time: %lu\n"
+		"Context pointer: %p\n---\n",
+		coder->id, coder->thread, coder->state,
+		coder->compiles, coder->last_compile_time, coder->ctx
+	);
 }

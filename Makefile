@@ -6,6 +6,7 @@ CFLAGS := -Wall -Wextra -Werror -pthread
 SRC := \
 	src/coder.c \
 	src/context.c \
+	src/debug.c \
 	src/error.c \
 	src/get.c \
 	src/main.c \

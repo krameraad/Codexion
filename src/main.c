@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/19 19:09:05 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/20 10:56:20 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char const *argv[])
 	ctx = context_new(argv);
 	if (ctx == NULL)
 		return (1);
-	coders = setup_coders(*ctx);
+	coders = setup_coders(ctx);
 	if (!coders)
 		return (1);
 	for (int i = 0; i < ctx->number_of_coders; ++i)
