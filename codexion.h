@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/22 21:35:59 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/22 21:40:15 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,17 @@ typedef struct s_dongle
 	time_t	last_drop_time;
 }	t_dongle;
 
+/* Represents data of a coder. */
+typedef struct s_coder
+{
+	pthread_t		thread;
+	size_t			id;
+	t_coderstate	state;
+	size_t			compiles;
+	time_t			last_compile_time;
+	t_context		*ctx;
+}	t_coder;
+
 /* Contains general info for the simulation. */
 typedef struct s_context
 {
@@ -110,18 +121,13 @@ typedef struct s_context
 	- edf: Earliest deadline first, with
 	deadline = `last_compile_start` + `time_to_burnout` */
 	t_scheduler	scheduler;
-}	t_context;	
 
-/* Represents data of a coder. */
-typedef struct s_coder
-{
-	pthread_t		thread;
-	size_t			id;
-	t_coderstate	state;
-	size_t			compiles;
-	time_t			last_compile_time;
-	t_context		*ctx;
-}	t_coder;
+	/* Array of all coders. */
+	t_coder		*coders;
+
+	/* Array of all dongles. */
+	t_dongle	*dongles;
+}	t_context;
 
 // CODER.C --------------------------------------------------------------------
 /* Coder function loop. */
