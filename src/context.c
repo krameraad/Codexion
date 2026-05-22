@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 22:00:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/17 18:57:54 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/22 21:30:36 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,17 @@ static bool	context_validate(t_context *ctx)
 
 void	context_print(t_context *ctx)
 {
-	printf("%d\n", ctx->number_of_coders);
-	printf("%d\n", ctx->time_to_burnout);
-	printf("%d\n", ctx->time_to_compile);
-	printf("%d\n", ctx->time_to_debug);
-	printf("%d\n", ctx->time_to_refactor);
-	printf("%d\n", ctx->number_of_compiles_required);
-	printf("%d\n", ctx->dongle_cooldown);
-	printf("%d\n", ctx->scheduler);
+	printf("Coders:            %d\n", ctx->number_of_coders);
+	printf("Burnout time:      %d\n", ctx->time_to_burnout);
+	printf("Compile time:      %d\n", ctx->time_to_compile);
+	printf("Debug time:        %d\n", ctx->time_to_debug);
+	printf("Refactor time:     %d\n", ctx->time_to_refactor);
+	printf("Compiles required: %d\n", ctx->number_of_compiles_required);
+	printf("Dongle cooldown:   %d\n", ctx->dongle_cooldown);
+	if (ctx->scheduler == FIFO)
+		printf("Scheduler:         fifo\n");
+	else
+		printf("Scheduler:         edf\n");
 }
 
 t_context	*context_new(char const **args)

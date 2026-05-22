@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/20 14:50:59 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/22 21:35:59 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ printf, fprintf, strcmp, strlen, atoi, memset
 # define ESC_X "\033[0m"
 
 # define ERR_MEM "Failed to allocate memory."
+# define ERR_THRD "Failed to create a thread."
 # define ERR_ARGC "Number of arguments must be 8."
 # define ERR_ARGV "Arguments are invalid (must be ints above 0 and fifo/edf)."
 
@@ -70,6 +71,7 @@ typedef enum e_scheduler
 typedef struct s_dongle
 {
 	bool	available;
+	time_t	last_drop_time;
 }	t_dongle;
 
 /* Contains general info for the simulation. */

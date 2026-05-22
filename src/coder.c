@@ -6,18 +6,18 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/20 14:51:25 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/22 20:51:08 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../codexion.h"
 
-static void drop_forks(void)
+static void drop_dongles(void)
 {
 	// drop forks
 }
 
-static void take_forks(t_coder *coder)
+static void take_dongles(t_coder *coder)
 {
 	// lock print mutex
 	printf("%zu %lu has taken a dongle\n", timestamp(), coder->id);
@@ -29,9 +29,10 @@ static void take_forks(t_coder *coder)
 
 static void work(t_coder *coder)
 {
+	coder->last_compile_time = timestamp();
 	coder->state = COMPILING;
 	// lock print mutex
-	printf("%zu %lu is compiling\n", timestamp(), coder->id);
+	printf("%zu %lu is compiling\n", coder->last_compile_time, coder->id);
 	// unlock print mutex
 	usleep(500000);
 	coder->state = DEBUGGING;
@@ -54,10 +55,10 @@ void *coder(void *arg)
 	coder = arg;
 	while (true)
 	{
-		coder_print(coder);
-		take_forks(coder);
+		// coder_print(coder);
+		take_dongles(coder);
 		work(coder);
-		drop_forks();
+		drop_dongles();
 		coder->compiles += 1;
 	}
 	return (NULL);
