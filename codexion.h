@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/22 21:40:15 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/26 23:12:16 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,50 @@ typedef struct s_dongle
 	time_t	last_drop_time;
 }	t_dongle;
 
+/* Contains general info for the simulation. */
+typedef struct s_context
+{
+	/* Number of coders. Also the number of dongles. */
+	int			number_of_coders;
+	
+	/* Coders burn out if they didn't start compiling within
+	`time_to_burnout` milliseconds since the beginning of
+	their last compile or the beginning of the simulation. */
+	int				time_to_burnout;
+	
+	/* Time in milliseconds that it takes for a coder to compile.
+	Coder must hold two dongles to compile.
+	Coder will start debugging after compiling. */
+	int				time_to_compile;
+	
+	/* Time in milliseconds that it takes for a coder to debug.
+	Coder will start refactoring after debugging. */
+	int				time_to_debug;
+	
+	/* Time in milliseconds that it takes for a coder to refactor.
+	Coder will try to acquire dongles after refactoring. */
+	int				time_to_refactor;
+	
+	/* Simulation stops if all coders have compiled this many times. */
+	int				number_of_compiles_required;
+	
+	/* Time in milliseconds that a dongle is unavailable after release. */
+	int				dongle_cooldown;
+	
+	/* Arbitration policy used by dongles to decide who gets them
+	when multiple coders request a dongle.
+	- fifo: Coder whose request arrived first. 
+	- edf: Earliest deadline first, with
+	deadline = `last_compile_start` + `time_to_burnout` */
+	t_scheduler		scheduler;
+
+	/* Array of all dongles. */
+	t_dongle		*dongles;
+
+	/* Mutex to guard print statements. */
+	pthread_mutex_t	print_mutex;
+}	t_context;
+
 /* Represents data of a coder. */
 typedef struct s_coder
 {
@@ -84,50 +128,6 @@ typedef struct s_coder
 	time_t			last_compile_time;
 	t_context		*ctx;
 }	t_coder;
-
-/* Contains general info for the simulation. */
-typedef struct s_context
-{
-	/* Number of coders. Also the number of dongles. */
-	int			number_of_coders;
-	
-	/* Coders burn out if they didn't start compiling within
-	`time_to_burnout` milliseconds since the beginning of
-	their last compile or the beginning of the simulation. */
-	int			time_to_burnout;
-	
-	/* Time in milliseconds that it takes for a coder to compile.
-	Coder must hold two dongles to compile.
-	Coder will start debugging after compiling. */
-	int			time_to_compile;
-	
-	/* Time in milliseconds that it takes for a coder to debug.
-	Coder will start refactoring after debugging. */
-	int			time_to_debug;
-	
-	/* Time in milliseconds that it takes for a coder to refactor.
-	Coder will try to acquire dongles after refactoring. */
-	int			time_to_refactor;
-	
-	/* Simulation stops if all coders have compiled this many times. */
-	int			number_of_compiles_required;
-	
-	/* Time in milliseconds that a dongle is unavailable after release. */
-	int			dongle_cooldown;
-	
-	/* Arbitration policy used by dongles to decide who gets them
-	when multiple coders request a dongle.
-	- fifo: Coder whose request arrived first. 
-	- edf: Earliest deadline first, with
-	deadline = `last_compile_start` + `time_to_burnout` */
-	t_scheduler	scheduler;
-
-	/* Array of all coders. */
-	t_coder		*coders;
-
-	/* Array of all dongles. */
-	t_dongle	*dongles;
-}	t_context;
 
 // CODER.C --------------------------------------------------------------------
 /* Coder function loop. */
@@ -158,6 +158,10 @@ t_scheduler	get_scheduler(char const *s);
 /* Return an array of coders made from the arguments in `ctx`.
 Can fail, in which case it returns `NULL` and prints a message. */
 t_coder		*setup_coders(t_context *ctx);
+
+/* Return an array of dongles made from the arguments in `ctx`.
+Can fail, in which case it returns `NULL` and prints a message. */
+t_dongle	*setup_dongles(int count);
 
 // TIME.C ---------------------------------------------------------------------
 /* Returns a `time_t` value that represents a timestamp in milliseconds. */

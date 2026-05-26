@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 22:00:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/22 21:30:36 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/26 23:12:25 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_context	*context_new(char const **args)
 	ctx->number_of_compiles_required = atou(args[6]);
 	ctx->dongle_cooldown = atou(args[7]);
 	ctx->scheduler = get_scheduler(args[8]);
+	ctx->dongles = setup_dongles(ctx->number_of_coders);
+	pthread_mutex_init(&ctx->print_mutex, NULL);
 	if (!context_validate(ctx))
 		return (error(ERR_ARGV, "context_new"), free(ctx), NULL);
 	return (ctx);

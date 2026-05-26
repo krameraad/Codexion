@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/22 20:27:38 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/26 23:11:45 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,21 @@ t_coder	*setup_coders(t_context *ctx)
 		++i;
 	}
 	return (coders);
+}
+
+t_dongle	*setup_dongles(int count)
+{
+	t_dongle	*dongles;
+	int		i;
+
+	dongles = malloc(count * sizeof(t_dongle));
+	if (!dongles)
+		return (error(ERR_MEM, "setup_dongles"), NULL);
+	i = 0;
+	while (i < count)
+	{
+		dongles[i] = (t_dongle){true, 0};
+		++i;
+	}
+	return (dongles);
 }
