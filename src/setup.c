@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/26 23:11:45 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/27 17:46:31 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 t_coder	*setup_coders(t_context *ctx)
 {
 	t_coder	*coders;
+	int		count;
 	int		i;
 
-	coders = malloc(ctx->number_of_coders * sizeof(t_coder));
+	count = ctx->number_of_coders;
+	coders = malloc(count * sizeof(t_coder));
 	if (!coders)
 		return (error(ERR_MEM, "setup_coders"), NULL);
 	i = 0;
-	while (i < ctx->number_of_coders)
+	while (i < count)
 	{
-		coders[i] = (t_coder){0, i, FREE, 0, 0, ctx};
+		coders[i] = (t_coder){0, i, FREE, 0, 0, ctx, NULL, NULL};
+		coders[i].dongle_left = &ctx->dongles[(i - 1 + count) % count];
+		coders[i].dongle_right = &ctx->dongles[(i + 1) % count];
 		++i;
 	}
 	return (coders);
@@ -32,7 +36,7 @@ t_coder	*setup_coders(t_context *ctx)
 t_dongle	*setup_dongles(int count)
 {
 	t_dongle	*dongles;
-	int		i;
+	int			i;
 
 	dongles = malloc(count * sizeof(t_dongle));
 	if (!dongles)
@@ -40,7 +44,9 @@ t_dongle	*setup_dongles(int count)
 	i = 0;
 	while (i < count)
 	{
-		dongles[i] = (t_dongle){true, 0};
+		pthread_mutex_init(&dongles[i].mutex, NULL);
+		dongles[i].available = true;
+		dongles[i].last_drop_time = 0;
 		++i;
 	}
 	return (dongles);
