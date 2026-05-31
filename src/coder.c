@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/27 21:01:38 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/31 17:10:12 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@ static void	drop_dongles(t_coder *coder)
 static void	take_dongles(t_coder *coder)
 {
 	pthread_mutex_lock(&coder->dongle_left->mutex);
-	// log_state(&coder->ctx->print_mutex, timestamp(), coder->id, LOG_DONGLE);
+	log_state(&coder->ctx->print_mutex, timestamp(), coder->id, LOG_DONGLE);
 	pthread_mutex_lock(&coder->dongle_right->mutex);
-	// log_state(&coder->ctx->print_mutex, timestamp(), coder->id, LOG_DONGLE);
+	log_state(&coder->ctx->print_mutex, timestamp(), coder->id, LOG_DONGLE);
 }
 
 static void	work(t_coder *coder)
 {
 	coder->last_compile = timestamp();
 	coder->state = COMPILING;
-	// log_state(
-	// 	&coder->ctx->print_mutex, coder->last_compile, coder->id, LOG_COMPILE);
+	log_state(
+		&coder->ctx->print_mutex, coder->last_compile, coder->id, LOG_COMPILE);
 	usleep(coder->ctx->time_to_compile * 1000);
 	coder->state = DEBUGGING;
-	// log_state(&coder->ctx->print_mutex, timestamp(), coder->id, LOG_DEBUG);
+	log_state(&coder->ctx->print_mutex, timestamp(), coder->id, LOG_DEBUG);
 	usleep(coder->ctx->time_to_debug * 1000);
 	coder->state = REFACTORING;
-	// log_state(&coder->ctx->print_mutex, timestamp(), coder->id, LOG_REFACTOR);
+	log_state(&coder->ctx->print_mutex, timestamp(), coder->id, LOG_REFACTOR);
 	usleep(coder->ctx->time_to_refactor * 1000);
 	coder->state = FREE;
 }

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/27 21:10:26 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/31 17:19:37 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	main(int argc, char const *argv[])
 	coders = setup_coders(ctx);
 	if (!coders)
 		return (error(ERR, "main"));
+	printf("HELP ME!\n");
 	err = run_threads(coders, ctx->number_of_coders);
-	// pthread_mutex_lock(&ctx->print_mutex);
 	context_free(ctx);
 	return (err);
 }

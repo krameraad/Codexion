@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 23:17:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/27 20:53:29 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/05/31 17:07:51 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	log_state(pthread_mutex_t *mutex, time_t t, size_t id, char const *msg)
 	int	result;
 
 	pthread_mutex_lock(mutex);
-	printf("HELP!\n");
 	result = printf("%zu %lu %s\n", t, id, msg);
 	pthread_mutex_unlock(mutex);
 	return (result);
