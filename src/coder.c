@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/31 17:10:12 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/02 22:32:45 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	*coder(void *arg)
 	t_coder	*coder;
 
 	coder = arg;
+	if (coder->id % 2)
+		usleep(100000);
 	while (true)
 	{
 		// coder_print(coder);
