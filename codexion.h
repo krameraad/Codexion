@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/27 18:09:20 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/12 19:50:39 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,17 @@ typedef struct s_coder
 	t_dongle		*dongle_left;
 	t_dongle		*dongle_right;
 }	t_coder;
+
+/* Generic implementation of a priority queue. */
+typedef struct s_pqueue
+{
+	/* Items contained within the queue. */
+	void	**items;
+	/* Maximum number of elements contained within the queue. */
+	size_t	cap;
+	/* Current number of elements contained within the queue. */
+	size_t	len;
+}	t_pqueue;
 
 // CODER.C --------------------------------------------------------------------
 /* Coder function loop. */
