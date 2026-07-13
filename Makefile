@@ -10,6 +10,7 @@ SRC := \
 	src/debug.c \
 	src/get.c \
 	src/main.c \
+	src/pqueue.c \
 	src/print.c \
 	src/setup.c \
 	src/time.c

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/12 19:50:39 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/13 14:01:29 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@ printf, fprintf, strcmp, strlen, atoi, memset
 # define ERR_MEM "Failed to allocate memory."
 # define ERR_THRD "Failed to create a thread."
 # define ERR_ARGC "Number of arguments must be 8."
-# define ERR_ARGV "Arguments are invalid (must be ints above 0 and fifo/edf)."
+# define ERR_ARGV "Arguments are invalid (must follow format; see README.md)."
 
 # define LOG_DONGLE "has taken a dongle"
 # define LOG_COMPILE "is compiling"
 # define LOG_DEBUG "is debugging"
 # define LOG_REFACTOR "is refactoring"
 # define LOG_BURNOUT "burned out"
+
+typedef int (*pq_cmp)(const void *, const void *);
+
 
 // ENUMS ----------------------------------------------------------------------
 typedef enum e_coderstate
@@ -72,6 +75,7 @@ typedef enum e_scheduler
 	FIFO,
 	EDF
 }	t_scheduler;
+
 
 // STRUCTS --------------------------------------------------------------------
 /* Represents data of a dongle. */
@@ -139,11 +143,15 @@ typedef struct s_pqueue
 	size_t	cap;
 	/* Current number of elements contained within the queue. */
 	size_t	len;
+	/* Comparator function to sort items in the queue. */
+	pq_cmp	cmp;
 }	t_pqueue;
+
 
 // CODER.C --------------------------------------------------------------------
 /* Coder function loop. */
 void		*coder(void *arg);
+
 
 // CONTEXT.C ------------------------------------------------------------------
 /* Initialize the context using arguments from the command line.
@@ -154,9 +162,11 @@ void		context_print(t_context *ctx);
 /* Free all memory related to the context. */
 void		context_free(t_context *ctx);
 
+
 // DEBUG.C --------------------------------------------------------------------
 /* Print a coder's values. */
 void		coder_print(t_coder *coder);
+
 
 // PRINT.C --------------------------------------------------------------------
 /* Print an error message with the function that failed and return 1. */
@@ -165,11 +175,26 @@ int			error(char const *msg, char const *func);
 int			log_state(
 				pthread_mutex_t *mutex, time_t t, size_t id, char const *msg);
 
+
 // GET.C ----------------------------------------------------------------------
 /* Return `s` as an int if it's a valid unsigned integer, else -1. */
 int			atou(char const *s);
 /* Return scheduler as an enum `t_scheduler`. If invalid, return `NONE`. */
 t_scheduler	get_scheduler(char const *s);
+
+
+// PQUEUE.C -------------------------------------------------------------------
+/* Return an empty priority queue, that can contain elements up to `size`.
+Can fail, in which case it returns `NULL` and prints a message. */
+t_pqueue	*pqueue_init(size_t size, pq_cmp cmp);
+/* Free priority queue `pq`'s item array, and the queue itself. */
+void		pqueue_destroy(t_pqueue *pq);
+/* Push `item` onto priority queue `pq`, increasing its length by 1.
+Return `false` if the operation failed. */
+bool		pqueue_push(t_pqueue *pq, void *item);
+/* Pop an item from priority queue `pq`, decreasing its length by 1.
+Return `NULL` if the queue is empty. */
+void		*pqueue_pop(t_pqueue *pq);
 
 // SETUP.C --------------------------------------------------------------------
 /* Return an array of coders made from the arguments in `ctx`.
@@ -178,6 +203,7 @@ t_coder		*setup_coders(t_context *ctx);
 /* Return an array of dongles made from the arguments in `ctx`.
 Can fail, in which case it returns `NULL` and prints a message. */
 t_dongle	*setup_dongles(int count);
+
 
 // TIME.C ---------------------------------------------------------------------
 /* Returns a `time_t` value that represents a timestamp in milliseconds. */
