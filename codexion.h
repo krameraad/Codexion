@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:00:05 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/13 14:01:29 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/13 17:08:57 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ typedef struct s_pqueue
 	size_t	len;
 	/* Comparator function to sort items in the queue. */
 	pq_cmp	cmp;
+	/* Whether the elements must be sorted in reverse order. */
+	bool	rev;
 }	t_pqueue;
 
 
@@ -154,55 +156,67 @@ void		*coder(void *arg);
 
 
 // CONTEXT.C ------------------------------------------------------------------
-/* Initialize the context using arguments from the command line.
+/* Initializes the context using arguments from the command line.
 Can fail, in which case it returns `NULL` and prints a message. */
 t_context	*context_new(char const **args);
-/* Print the context's values. */
+/* Prints the context's values. */
 void		context_print(t_context *ctx);
-/* Free all memory related to the context. */
+/* Frees all memory related to the context. */
 void		context_free(t_context *ctx);
 
 
 // DEBUG.C --------------------------------------------------------------------
-/* Print a coder's values. */
+/* Prints a coder's values. */
 void		coder_print(t_coder *coder);
 
 
 // PRINT.C --------------------------------------------------------------------
-/* Print an error message with the function that failed and return 1. */
+/* Prints an error message with the function that failed and return 1. */
 int			error(char const *msg, char const *func);
-/* Print a message, output guarded by a mutex. */
+/* Prints a message, output guarded by a mutex. */
 int			log_state(
 				pthread_mutex_t *mutex, time_t t, size_t id, char const *msg);
 
 
 // GET.C ----------------------------------------------------------------------
-/* Return `s` as an int if it's a valid unsigned integer, else -1. */
+/* Returns `s` as an int if it's a valid unsigned integer, else -1. */
 int			atou(char const *s);
-/* Return scheduler as an enum `t_scheduler`. If invalid, return `NONE`. */
+/* Returns scheduler as an enum `t_scheduler`. If invalid, return `NONE`. */
 t_scheduler	get_scheduler(char const *s);
 
 
 // PQUEUE.C -------------------------------------------------------------------
-/* Return an empty priority queue, that can contain elements up to `size`.
+/* Returns an empty priority queue, that can contain elements up to `size`.
+`cmp` is the comparator used to sort elements, with `rev` reversing the order.
 Can fail, in which case it returns `NULL` and prints a message. */
-t_pqueue	*pqueue_init(size_t size, pq_cmp cmp);
-/* Free priority queue `pq`'s item array, and the queue itself. */
+t_pqueue	*pqueue_init(size_t size, pq_cmp cmp, bool rev);
+/* Frees priority queue `pq`'s item array, and the queue itself. */
 void		pqueue_destroy(t_pqueue *pq);
-/* Push `item` onto priority queue `pq`, increasing its length by 1.
-Return `false` if the operation failed. */
+/* Sorts priority queue `pq` using its comparator.
+Called automatically by `pqueue_push`. */
+void		pqueue_sort(t_pqueue *pq);
+/* Pushes `item` onto priority queue `pq`, increasing its length by 1.
+Calls `pqueue_sort` after pushing.
+Returns `false` if the operation failed. */
 bool		pqueue_push(t_pqueue *pq, void *item);
-/* Pop an item from priority queue `pq`, decreasing its length by 1.
-Return `NULL` if the queue is empty. */
+/* Pops an item from priority queue `pq`, decreasing its length by 1.
+Returns `NULL` if the queue is empty. */
 void		*pqueue_pop(t_pqueue *pq);
 
 // SETUP.C --------------------------------------------------------------------
-/* Return an array of coders made from the arguments in `ctx`.
+/* Returns an array of coders made from the arguments in `ctx`.
 Can fail, in which case it returns `NULL` and prints a message. */
 t_coder		*setup_coders(t_context *ctx);
-/* Return an array of dongles made from the arguments in `ctx`.
+/* Returns an array of dongles made from the arguments in `ctx`.
 Can fail, in which case it returns `NULL` and prints a message. */
 t_dongle	*setup_dongles(int count);
+
+
+// SORT.C ---------------------------------------------------------------------
+/* Swaps pointers `a` and `b` using pointers. */
+void swap(void **a, void **b);
+/* Compares two integers `a` and `b`. */
+int	cmp_int(const void *a, const void *b);
 
 
 // TIME.C ---------------------------------------------------------------------

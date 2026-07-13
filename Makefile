@@ -13,6 +13,7 @@ SRC := \
 	src/pqueue.c \
 	src/print.c \
 	src/setup.c \
+	src/sort.c \
 	src/time.c
 OBJ := $(SRC:src/%.c=obj/%.o)
 
