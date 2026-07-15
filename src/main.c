@@ -6,11 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/31 17:19:37 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/15 19:31:39 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../codexion.h"
+#include "coder.h"
+#include "traceback.h"
 
 static int	run_threads(t_coder *coders, size_t count)
 {
@@ -21,7 +22,7 @@ static int	run_threads(t_coder *coders, size_t count)
 	while (i < count)
 	{
 		if (pthread_create(&coders[i].thread, NULL, &coder, &coders[i]))
-			return (error(ERR_THRD, "run_threads"));
+			return (traceback(ERR_THRD, "run_threads"));
 		++i;
 	}
 	i = 0;
@@ -40,13 +41,13 @@ int	main(int argc, char const *argv[])
 	int			err;
 
 	if (argc != 9)
-		return (error(ERR_ARGC, "main"));
+		return (traceback(ERR_ARGC, "main"));
 	ctx = context_new(argv);
 	if (ctx == NULL)
-		return (error(ERR, "main"));
+		return (traceback(ERR, "main"));
 	coders = setup_coders(ctx);
 	if (!coders)
-		return (error(ERR, "main"));
+		return (traceback(ERR, "main"));
 	printf("HELP ME!\n");
 	err = run_threads(coders, ctx->number_of_coders);
 	context_free(ctx);

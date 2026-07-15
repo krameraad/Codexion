@@ -2,7 +2,7 @@ NAME := bin/codexion
 # ./bin/codexion 5 1000 250 250 250 10 100 fifo
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -pthread
+CFLAGS := -I./include -Wall -Wextra -Werror -pthread
 
 SRC := \
 	src/coder.c \
@@ -10,11 +10,9 @@ SRC := \
 	src/debug.c \
 	src/get.c \
 	src/main.c \
-	src/pqueue.c \
-	src/print.c \
 	src/setup.c \
-	src/sort.c \
-	src/time.c
+	src/timestamp.c \
+	src/traceback.c
 OBJ := $(SRC:src/%.c=obj/%.o)
 
 

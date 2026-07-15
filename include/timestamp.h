@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   print.c                                            :+:    :+:            */
+/*   timestamp.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2026/04/29 23:17:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/31 17:07:51 by ekramer       ########   odam.nl         */
+/*   Created: 2026/07/15 15:27:32 by ekramer       #+#    #+#                 */
+/*   Updated: 2026/07/15 16:01:17 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../codexion.h"
+#ifndef TIMESTAMP_H
+# define TIMESTAMP_H
 
-int	error(char const *msg, char const *func)
-{
-	fprintf(
-		stderr,
-		ESC_R "Error in function \"%s\":\n\t%s\n" ESC_X,
-		func, msg
-		);
-	return (1);
-}
+# include <sys/time.h>
 
-int	log_state(pthread_mutex_t *mutex, time_t t, size_t id, char const *msg)
-{
-	int	result;
+/* Returns a `time_t` value that represents a timestamp in milliseconds. */
+time_t	timestamp(void);
 
-	pthread_mutex_lock(mutex);
-	result = printf("%zu %lu %s\n", t, id, msg);
-	pthread_mutex_unlock(mutex);
-	return (result);
-}
+#endif // TIMESTAMP_H

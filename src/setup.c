@@ -6,11 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/31 17:14:52 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/15 19:31:45 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../codexion.h"
+#include "coder.h"
+#include "traceback.h"
 
 t_coder	*setup_coders(t_context *ctx)
 {
@@ -21,7 +22,7 @@ t_coder	*setup_coders(t_context *ctx)
 	count = ctx->number_of_coders;
 	coders = malloc(count * sizeof(t_coder));
 	if (!coders)
-		return (error(ERR_MEM, "setup_coders"), NULL);
+		return (traceback(ERR_MEM, "setup_coders"), NULL);
 	i = 0;
 	while (i < count - 1)
 	{
@@ -43,7 +44,7 @@ t_dongle	*setup_dongles(int count)
 
 	dongles = malloc(count * sizeof(t_dongle));
 	if (!dongles)
-		return (error(ERR_MEM, "setup_dongles"), NULL);
+		return (traceback(ERR_MEM, "setup_dongles"), NULL);
 	i = 0;
 	while (i < count)
 	{

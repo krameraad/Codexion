@@ -6,11 +6,28 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/02 22:32:45 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/15 19:53:11 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../codexion.h"
+#include "coder.h"
+#include "timestamp.h"
+#ifndef _DEFAULT_SOURCE
+# define _DEFAULT_SOURCE
+#endif
+#include <unistd.h>
+#include <stdio.h>
+
+static int	log_state(
+	pthread_mutex_t *mutex, time_t t, size_t id, char const *msg)
+{
+	int	result;
+
+	pthread_mutex_lock(mutex);
+	result = printf("%zu %lu %s\n", t, id, msg);
+	pthread_mutex_unlock(mutex);
+	return (result);
+}
 
 static void	drop_dongles(t_coder *coder)
 {
@@ -48,7 +65,7 @@ void	*coder(void *arg)
 
 	coder = arg;
 	if (coder->id % 2)
-		usleep(100000);
+		usleep(10000);
 	while (true)
 	{
 		// coder_print(coder);

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   time.c                                             :+:    :+:            */
+/*   timestamp.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/12 14:57:49 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/19 18:35:07 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/15 16:03:31 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../codexion.h"
+#include "timestamp.h"
+#include <stddef.h>
 
 time_t	timestamp(void)
 {

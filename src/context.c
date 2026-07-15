@@ -6,11 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 22:00:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/05/31 16:53:32 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/15 19:31:29 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../codexion.h"
+#include "context.h"
+#include "traceback.h"
 
 /* Validate that the context contains correct values. */
 static bool	context_validate(t_context *ctx)
@@ -64,7 +65,7 @@ t_context	*context_new(char const **args)
 
 	ctx = malloc(sizeof(t_context));
 	if (ctx == NULL)
-		return (error(ERR_MEM, "context_new"), NULL);
+		return (traceback(ERR_MEM, "context_new"), NULL);
 	ctx->number_of_coders = atou(args[1]);
 	ctx->time_to_burnout = atou(args[2]);
 	ctx->time_to_compile = atou(args[3]);
@@ -74,10 +75,10 @@ t_context	*context_new(char const **args)
 	ctx->dongle_cooldown = atou(args[7]);
 	ctx->scheduler = get_scheduler(args[8]);
 	if (!context_validate(ctx))
-		return (error(ERR_ARGV, "context_new"), free(ctx), NULL);
+		return (traceback(ERR_ARGV, "context_new"), free(ctx), NULL);
 	ctx->dongles = setup_dongles(ctx->number_of_coders);
 	if (!ctx->dongles)
-		return (error(ERR, "context_new"), free(ctx), NULL);
+		return (traceback(ERR, "context_new"), free(ctx), NULL);
 	pthread_mutex_init(&ctx->print_mutex, NULL);
 	return (ctx);
 }

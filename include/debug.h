@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   debug.c                                            :+:    :+:            */
+/*   debug.h                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2026/05/20 14:45:30 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 17:00:29 by ekramer       ########   odam.nl         */
+/*   Created: 2026/07/15 16:59:56 by ekramer       #+#    #+#                 */
+/*   Updated: 2026/07/15 17:01:04 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "coder.h"
+#ifndef DEBUG_H
+# define DEBUG_H
 
-void	coder_print(t_coder *coder)
-{
-	printf(
-		"---\nCoder: %lu, thread id: %lu\nState: %d\n"
-		"Compiles: %d, last compile time: %lu\n"
-		"Context pointer: %p\n---\n",
-		coder->id, coder->thread, coder->state,
-		coder->compiles, coder->last_compile, coder->ctx
-		);
-}
+# include "coder.h"
+
+/* Print a coder's values. */
+void		coder_print(t_coder *coder);
+
+#endif // DEBUG_H

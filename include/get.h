@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   debug.c                                            :+:    :+:            */
+/*   get.h                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2026/05/20 14:45:30 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 17:00:29 by ekramer       ########   odam.nl         */
+/*   Created: 2026/07/15 16:22:52 by ekramer       #+#    #+#                 */
+/*   Updated: 2026/07/15 16:50:34 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "coder.h"
+#ifndef GET_H
+# define GET_H
 
-void	coder_print(t_coder *coder)
-{
-	printf(
-		"---\nCoder: %lu, thread id: %lu\nState: %d\n"
-		"Compiles: %d, last compile time: %lu\n"
-		"Context pointer: %p\n---\n",
-		coder->id, coder->thread, coder->state,
-		coder->compiles, coder->last_compile, coder->ctx
-		);
-}
+# include "context.h"
+
+/* Return `s` as an int if it's a valid unsigned integer, else -1. */
+int			atou(char const *s);
+/* Return scheduler as an enum `t_scheduler`. If invalid, return `NONE`. */
+t_scheduler	get_scheduler(char const *s);
+
+#endif // GET_H
