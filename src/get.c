@@ -6,11 +6,13 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:53:06 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 16:51:02 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/16 23:25:56 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get.h"
+#include <string.h>
+#include <stdlib.h>
 
 /* Return `true` if `c` is in `s`, else `false`. */
 static bool	is_in(char c, char const *s)

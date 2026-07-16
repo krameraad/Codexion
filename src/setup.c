@@ -6,12 +6,13 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 19:31:45 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/16 23:28:13 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coder.h"
 #include "traceback.h"
+#include <stdlib.h>
 
 t_coder	*setup_coders(t_context *ctx)
 {

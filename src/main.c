@@ -6,11 +6,13 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 19:31:39 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/16 23:27:41 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coder.h"
+#include "context.h"
+#include "setup.h"
 #include "traceback.h"
 
 static int	run_threads(t_coder *coders, size_t count)
@@ -48,7 +50,6 @@ int	main(int argc, char const *argv[])
 	coders = setup_coders(ctx);
 	if (!coders)
 		return (traceback(ERR, "main"));
-	printf("HELP ME!\n");
 	err = run_threads(coders, ctx->number_of_coders);
 	context_free(ctx);
 	return (err);

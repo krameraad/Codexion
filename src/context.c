@@ -6,12 +6,16 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 22:00:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 19:31:29 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/16 23:13:42 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "context.h"
 #include "traceback.h"
+#include "get.h"
+#include "setup.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /* Validate that the context contains correct values. */
 static bool	context_validate(t_context *ctx)

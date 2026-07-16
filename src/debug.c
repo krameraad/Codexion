@@ -6,11 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/20 14:45:30 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 17:00:29 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/16 23:25:13 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coder.h"
+#include <stdio.h>
 
 void	coder_print(t_coder *coder)
 {
