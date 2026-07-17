@@ -10,7 +10,9 @@ SRC := \
 	src/debug.c \
 	src/get.c \
 	src/main.c \
+	src/pqueue.c \
 	src/setup.c \
+	src/sort.c \
 	src/timestamp.c \
 	src/traceback.c
 OBJ := $(SRC:src/%.c=obj/%.o)
@@ -41,7 +43,7 @@ test: norm valgrind helgrind drd
 norm:
 	@echo "\033[1;96m\nNORMINETTE"
 	@echo "--------------------------------------------------------------------------------\033[0m"
-	@norminette -RCheckForbiddenSourceHeader codexion.h src
+	@norminette -RCheckForbiddenSourceHeader include src
 
 valgrind: $(NAME)
 	@echo "\033[1;96m\nVALGRIND"

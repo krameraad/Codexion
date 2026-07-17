@@ -6,11 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/12 19:45:22 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/13 17:09:42 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 11:26:13 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../codexion.h"
+#include "sort.h"
+#include <stdlib.h>
 
 t_pqueue	*pqueue_init(size_t size, pq_cmp cmp, bool rev)
 {
