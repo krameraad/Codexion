@@ -6,25 +6,28 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/12 19:45:22 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 11:26:13 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 14:38:23 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sort.h"
+#include "pqueue.h"
+
+#include "cmp.h"
+#include "traceback.h"
 #include <stdlib.h>
 
-t_pqueue	*pqueue_init(size_t size, pq_cmp cmp, bool rev)
+t_pqueue	*pqueue_init(size_t size, t_pq_cmp cmp, bool rev)
 {
 	t_pqueue	*pq;
 
 	pq = malloc(sizeof(t_pqueue));
 	if (!pq)
-		return (error(ERR_MEM, "pqueue_init"), NULL);
+		return (traceback(ERR_MEM, "pqueue_init"), NULL);
 	pq->items = malloc(size * sizeof(void *));
 	if (!pq->items)
-		return (free(pq), error(ERR_MEM, "pqueue_init"), NULL);
-	pq->len = 0;
+		return (free(pq), traceback(ERR_MEM, "pqueue_init"), NULL);
 	pq->cap = size;
+	pq->len = 0;
 	pq->cmp = cmp;
 	pq->rev = rev;
 	return (pq);
@@ -97,6 +100,6 @@ void	*pqueue_pop(t_pqueue *pq)
 // 	pqueue_push(pq, &b);
 // 	pqueue_push(pq, &c);
 // 	pqueue_print(pq);
-	
+
 // 	return 0;
 // }

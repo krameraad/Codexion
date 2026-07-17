@@ -6,11 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 19:53:11 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 14:37:43 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coder.h"
+
 #include "timestamp.h"
 #ifndef _DEFAULT_SOURCE
 # define _DEFAULT_SOURCE
@@ -68,7 +69,6 @@ void	*coder(void *arg)
 		usleep(10000);
 	while (true)
 	{
-		// coder_print(coder);
 		take_dongles(coder);
 		work(coder);
 		drop_dongles(coder);

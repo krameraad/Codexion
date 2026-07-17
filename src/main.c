@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/16 23:27:41 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 14:37:51 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static int	run_threads(t_coder *coders, size_t count)
 	size_t		i;
 
 	i = 0;
-	// printf("%p\n", &ctx);
 	while (i < count)
 	{
 		if (pthread_create(&coders[i].thread, NULL, &coder, &coders[i]))

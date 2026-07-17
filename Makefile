@@ -5,6 +5,7 @@ CC := cc
 CFLAGS := -I./include -Wall -Wextra -Werror -pthread
 
 SRC := \
+	src/cmp.c \
 	src/coder.c \
 	src/context.c \
 	src/debug.c \
@@ -12,7 +13,6 @@ SRC := \
 	src/main.c \
 	src/pqueue.c \
 	src/setup.c \
-	src/sort.c \
 	src/timestamp.c \
 	src/traceback.c
 OBJ := $(SRC:src/%.c=obj/%.o)

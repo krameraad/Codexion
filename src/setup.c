@@ -6,11 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/16 23:28:13 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 14:33:15 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "coder.h"
+#include "setup.h"
+
 #include "traceback.h"
 #include <stdlib.h>
 

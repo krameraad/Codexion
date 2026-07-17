@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   sort.h                                             :+:    :+:            */
+/*   cmp.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2026/07/17 11:26:30 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 11:27:17 by ekramer       ########   odam.nl         */
+/*   Created: 2026/07/13 16:23:35 by ekramer       #+#    #+#                 */
+/*   Updated: 2026/07/17 14:34:18 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SORT_H
-# define SORT_H
+#include "cmp.h"
 
-void	swap(void **a, void **b);
+void	swap(void **a, void **b)
+{
+	void	*tmp;
 
-int	cmp_int(const void *a, const void *b);
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
 
-#endif // SORT_H
+int	cmp_int(const void *a, const void *b)
+{
+	return (*(int *)a - *(int *)b);
+}

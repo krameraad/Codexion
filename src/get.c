@@ -6,11 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:53:06 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/16 23:25:56 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 14:32:07 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get.h"
+
 #include <string.h>
 #include <stdlib.h>
 
