@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:33:21 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/16 23:22:32 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 16:03:04 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,26 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-/* Initialize the context using arguments from the command line.
-Can fail, in which case it returns `NULL` and prints a message. */
+/**
+ * @brief Initialize the context using arguments from the command line.
+ * 
+ * @param args Program arguments.
+ * @return Context object containing the parsed data.
+ */
 t_context	*context_new(char const **args);
-/* Print the context's values. */
+
+/**
+ * @brief Print the contents of a context.
+ *
+ * @param ctx Context to print.
+ */
 void		context_print(t_context *ctx);
-/* Free all memory related to the context. */
+
+/**
+ * @brief Destroy a context and its associated resources.
+ *
+ * @param ctx Context to destroy.
+ */
 void		context_free(t_context *ctx);
 
 #endif // CONTEXT_H

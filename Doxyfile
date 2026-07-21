@@ -1,0 +1,12 @@
+PROJECT_NAME           = codexion
+PROJECT_BRIEF          = "Master the race for resources before the deadline masters you"
+OUTPUT_DIRECTORY       = docs
+OPTIMIZE_OUTPUT_FOR_C  = YES
+EXTRACT_ALL            = YES
+INPUT                  = src \
+                         include \
+                         *.c \
+                         *.h
+FILE_PATTERNS          = *.c \
+                         *.h
+SOURCE_BROWSER         = YES

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:22:52 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 16:50:34 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/18 20:32:53 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,20 @@
 
 # include "context.h"
 
-/* Return `s` as an int if it's a valid unsigned integer, else -1. */
+/**
+ * @brief Variant of `atoi()` that should return only positive integers.
+ * 
+ * @param s String to convert.
+ * @return Converted positive integer, or -1 on failure.
+ */
 int			atou(char const *s);
-/* Return scheduler as an enum `t_scheduler`. If invalid, return `NONE`. */
+
+/**
+ * @brief Get a valid scheduler type as an enum.
+ * 
+ * @param s String to parse into the scheduler type.
+ * @return Enum equivalent of the scheduler name.
+ */
 t_scheduler	get_scheduler(char const *s);
 
 #endif // GET_H

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 15:27:32 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/15 16:01:17 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/18 20:21:24 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,15 @@
 
 # include <sys/time.h>
 
-/* Returns a `time_t` value that represents a timestamp in milliseconds. */
+/**
+ * @brief Get the current program time in milliseconds.
+ * 
+ * The first time this function is run,
+ * it sets an anchor, making the time at that point always 0.
+ * All future timestamps are offset from that point.
+ * 
+ * @return Run time in milliseconds.
+ */
 time_t	timestamp(void);
 
 #endif // TIMESTAMP_H

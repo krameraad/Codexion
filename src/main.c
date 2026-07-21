@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 14:37:51 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/18 20:05:01 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ static int	run_threads(t_coder *coders, size_t count)
 	while (i < count)
 	{
 		if (pthread_create(&coders[i].thread, NULL, &coder, &coders[i]))
-			return (traceback(ERR_THRD, "run_threads"));
+			return (traceback(ERR_THRC, "run_threads"));
 		++i;
 	}
 	i = 0;
 	while (i < count)
 	{
-		pthread_join(coders[i].thread, NULL);
+		if (pthread_join(coders[i].thread, NULL))
+			return (traceback(ERR_THRJ, "run_threads"));
 		++i;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:58:32 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 14:33:06 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/18 20:24:05 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,20 @@
 
 # include "defs.h"
 
-/* Return an array of coders made from the arguments in `ctx`.
-Can fail, in which case it returns `NULL` and prints a message. */
+/**
+ * @brief Set up an array of coders.
+ * 
+ * @param ctx Context with info to build the array from.
+ * @return Array of coders, or `NULL` on failure.
+ */
 t_coder		*setup_coders(t_context *ctx);
 
-/* Return an array of dongles made from the arguments in `ctx`.
-Can fail, in which case it returns `NULL` and prints a message. */
+/**
+ * @brief Set up an array of dongles.
+ * 
+ * @param count Amount of dongles to create.
+ * @return Array of dongles, or `NULL` on failure.
+ */
 t_dongle	*setup_dongles(int count);
 
 #endif // SETUP_H

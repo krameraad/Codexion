@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/12 19:45:22 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 14:38:23 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 15:43:33 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "traceback.h"
 #include <stdlib.h>
 
-t_pqueue	*pqueue_init(size_t size, t_pq_cmp cmp, bool rev)
+t_pqueue	*pqueue_init(size_t size, t_cmp cmp, bool rev)
 {
 	t_pqueue	*pq;
 

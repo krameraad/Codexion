@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:59:56 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 14:31:18 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/17 15:42:10 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 
 # include "defs.h"
 
-/* Print a coder's values. */
+/**
+ * @brief Print the values of a coder.
+ *
+ * @param coder Coder to print.
+ */
 void		coder_print(t_coder *coder);
 
 #endif // DEBUG_H
