@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 22:00:54 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 14:31:41 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/22 20:33:00 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 #include "traceback.h"
 #include "get.h"
 #include "setup.h"
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-/* Validate that the context contains correct values. */
-static bool	context_validate(t_context *ctx)
+t_context	*context(void)
 {
-	if (ctx->number_of_coders < 1
-		|| ctx->time_to_burnout < 1
-		|| ctx->time_to_compile < 1
-		|| ctx->time_to_debug < 1
-		|| ctx->time_to_refactor < 1
-		|| ctx->number_of_compiles_required < 1
-		|| ctx->dongle_cooldown < 1
-		|| ctx->scheduler == NONE)
-		return (false);
-	return (true);
+	static t_context	ctx = {0};
+	static bool			initialized = false;
+
+	if (!initialized)
+	{
+		pthread_mutex_init(&ctx.print_mutex, NULL);
+		initialized = true;
+	}
+	return (&ctx);
 }
 
 void	context_print(t_context *ctx)

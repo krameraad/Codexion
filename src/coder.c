@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 14:37:43 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/22 18:51:49 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ static int	log_state(
 
 static void	drop_dongles(t_coder *coder)
 {
+	coder->dongle_left->last_drop_time = timestamp();
 	pthread_mutex_unlock(&coder->dongle_left->mutex);
+	coder->dongle_right->last_drop_time = timestamp();
 	pthread_mutex_unlock(&coder->dongle_right->mutex);
 }
 

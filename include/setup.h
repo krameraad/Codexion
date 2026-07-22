@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:58:32 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/18 20:24:05 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/22 20:28:13 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,7 @@
 
 # include "defs.h"
 
-/**
- * @brief Set up an array of coders.
- * 
- * @param ctx Context with info to build the array from.
- * @return Array of coders, or `NULL` on failure.
- */
-t_coder		*setup_coders(t_context *ctx);
+int			setup_context(char const **args);
 
 /**
  * @brief Set up an array of dongles.
@@ -30,5 +24,13 @@ t_coder		*setup_coders(t_context *ctx);
  * @return Array of dongles, or `NULL` on failure.
  */
 t_dongle	*setup_dongles(int count);
+
+/**
+ * @brief Set up an array of coders.
+ * 
+ * @param ctx Context with info to build the array from.
+ * @return Array of coders, or `NULL` on failure.
+ */
+t_coder		*setup_coders(int count, t_dongle **dongles);
 
 #endif // SETUP_H

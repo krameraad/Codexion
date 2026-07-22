@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/18 20:05:01 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/22 20:33:34 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,31 @@ int	main(int argc, char const *argv[])
 	ctx = context_new(argv);
 	if (ctx == NULL)
 		return (traceback(ERR, "main"));
-	coders = setup_coders(ctx);
+	coders = setup_coders(ctx->number_of_coders, ctx->dongles);
 	if (!coders)
 		return (traceback(ERR, "main"));
 	err = run_threads(coders, ctx->number_of_coders);
 	context_free(ctx);
 	return (err);
 }
+
+/*
+
+t_coder *coders;
+t_dongles *dongles;
+int err;
+
+if (argc != 9)
+	return (1);
+if (!setup_context(argv))
+	return (1);
+dongles = setup_dongles(ctx->number_of_coders);
+if (!dongles)
+	return (1);
+coders = setup_coders(ctx->number_of_coders, ctx->dongles);
+if (!coders)
+	return (free(dongles), 1);
+err = run_threads(coders, ctx->number_of_coders);
+return (free(coders), free(dongles), err);
+
+*/

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/16 23:20:50 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/19 20:07:53 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/22 20:29:05 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,6 @@ typedef struct s_context
 	 */
 	t_scheduler		scheduler;
 
-	/** @brief Array containing all shared dongles. */
-	t_dongle		*dongles;
-
 	/** @brief Mutex used to serialize console output. */
 	pthread_mutex_t	print_mutex;
 }	t_context;
@@ -145,9 +142,6 @@ typedef struct s_coder
 	 * Used to determine the coder's burnout deadline.
 	 */
 	time_t			last_compile;
-
-	/** @brief Pointer to the shared simulation context. */
-	t_context		*ctx;
 
 	/** @brief Pointer to the left adjacent dongle. */
 	t_dongle		*dongle_left;
