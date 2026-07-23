@@ -6,13 +6,14 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/23 15:55:24 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 15:55:54 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 21:40:57 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "context.h"
+#include <stdio.h>
 
-static int	log_state(time_t t, size_t id, char const *msg)
+int	log_state(time_t t, size_t id, char const *msg)
 {
 	int	result;
 

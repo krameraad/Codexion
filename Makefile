@@ -10,7 +10,9 @@ SRC := \
 	src/context.c \
 	src/debug.c \
 	src/get.c \
+	src/log_state.c \
 	src/main.c \
+	src/monitor.c \
 	src/pqueue.c \
 	src/setup.c \
 	src/timestamp.c \

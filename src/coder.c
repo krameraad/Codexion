@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 15:59:01 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 21:44:44 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,19 @@ static void	take_dongles(t_coder *coder)
 
 static void	work(t_coder *coder, t_context *ctx)
 {
+	if (ctx->abort)
+		return ;
 	coder->last_compile = timestamp();
 	coder->state = COMPILING;
 	log_state(coder->last_compile, coder->id, LOG_COMPILE);
 	usleep(ctx->time_to_compile * 1000);
+	if (ctx->abort)
+		return ;
 	coder->state = DEBUGGING;
 	log_state(timestamp(), coder->id, LOG_DEBUG);
 	usleep(ctx->time_to_debug * 1000);
+	if (ctx->abort)
+		return ;
 	coder->state = REFACTORING;
 	log_state(timestamp(), coder->id, LOG_REFACTOR);
 	usleep(ctx->time_to_refactor * 1000);
@@ -66,6 +72,8 @@ void	*coder(void *arg)
 		take_dongles(coder);
 		work(coder, ctx);
 		drop_dongles(coder);
+		if (ctx->abort)
+			break ;
 		coder->compiles += 1;
 	}
 	return (NULL);

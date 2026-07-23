@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 14:44:04 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 21:40:04 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 #include "context.h"
 #include "setup.h"
 #include "traceback.h"
+#include "monitor.h"
 #include <stdlib.h>
 
 static int	run_threads(t_coder *coders, int count)
 {
-	int	i;
+	pthread_t	monitor_thread;
+	int			i;
 
 	i = 0;
 	while (i < count)
 	{
-		if (pthread_create(&coders[i].thread, NULL, &coder, &coders[i]))
+		if (pthread_create(&coders[i].thread, NULL, &coder, coders + i))
 			return (traceback(ERR_THRC, "run_threads"));
 		++i;
 	}
+	if (pthread_create(&monitor_thread, NULL, &monitor, coders))
+		return (traceback(ERR_THRC, "run_threads"));
 	i = 0;
 	while (i < count)
 	{
@@ -34,6 +38,8 @@ static int	run_threads(t_coder *coders, int count)
 			return (traceback(ERR_THRJ, "run_threads"));
 		++i;
 	}
+	if (pthread_join(monitor_thread, NULL))
+		return (traceback(ERR_THRJ, "run_threads"));
 	return (0);
 }
 
