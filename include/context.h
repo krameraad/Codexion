@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:33:21 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 14:19:42 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 15:45:51 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ typedef struct s_context
 	 *   `last_compile + time_to_burnout`.
 	 */
 	t_scheduler		scheduler;
+
+	/** @brief Flag that signifies the end of the simulation. */
+	int				abort;
 
 	/** @brief Mutex used to serialize console output. */
 	pthread_mutex_t	print_mutex;

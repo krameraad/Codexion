@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 14:38:06 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 15:59:01 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,12 @@
 
 #include "context.h"
 #include "timestamp.h"
+#include "log_state.h"
 #ifndef _DEFAULT_SOURCE
 # define _DEFAULT_SOURCE
 #endif
 #include <unistd.h>
 #include <stdio.h>
-
-static int	log_state(time_t t, size_t id, char const *msg)
-{
-	int	result;
-
-	pthread_mutex_lock(&context()->print_mutex);
-	result = printf("%zu %lu %s\n", t, id, msg);
-	pthread_mutex_unlock(&context()->print_mutex);
-	return (result);
-}
 
 static void	drop_dongles(t_coder *coder)
 {
@@ -76,8 +67,6 @@ void	*coder(void *arg)
 		work(coder, ctx);
 		drop_dongles(coder);
 		coder->compiles += 1;
-		if (coder->compiles >= ctx->number_of_compiles_required)
-			break ;
 	}
 	return (NULL);
 }

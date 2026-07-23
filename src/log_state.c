@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   coder.h                                            :+:    :+:            */
+/*   log_state.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2026/07/15 16:37:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 15:58:28 by ekramer       ########   odam.nl         */
+/*   Created: 2026/07/23 15:55:24 by ekramer       #+#    #+#                 */
+/*   Updated: 2026/07/23 15:55:54 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CODER_H
-# define CODER_H
+#include "context.h"
 
-/**
- * @brief Coder main function loop.
- * 
- * @param arg Information of the coder. Should be an object of type `t_coder`.
- * @return `NULL`.
- */
-void	*coder(void *arg);
+static int	log_state(time_t t, size_t id, char const *msg)
+{
+	int	result;
 
-#endif // CODER_H
+	pthread_mutex_lock(&context()->print_mutex);
+	result = printf("%zu %lu %s\n", t, id, msg);
+	pthread_mutex_unlock(&context()->print_mutex);
+	return (result);
+}
