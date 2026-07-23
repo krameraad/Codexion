@@ -6,14 +6,14 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:22:52 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/18 20:32:53 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 14:31:45 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_H
 # define GET_H
 
-# include "context.h"
+# include "defs.h"
 
 /**
  * @brief Variant of `atoi()` that should return only positive integers.

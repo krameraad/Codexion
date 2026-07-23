@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:58:32 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/22 20:28:13 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 13:44:38 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ t_dongle	*setup_dongles(int count);
  * @param ctx Context with info to build the array from.
  * @return Array of coders, or `NULL` on failure.
  */
-t_coder		*setup_coders(int count, t_dongle **dongles);
+t_coder		*setup_coders(int count, t_dongle *dongles);
 
 #endif // SETUP_H

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 19:53:06 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/17 14:32:07 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 14:27:55 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 /* Return `true` if `c` is in `s`, else `false`. */
 static bool	is_in(char c, char const *s)

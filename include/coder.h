@@ -6,14 +6,12 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:37:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/18 20:06:35 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 14:32:12 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODER_H
 # define CODER_H
-
-# include "defs.h"
 
 # define LOG_DONGLE "has taken a dongle"
 # define LOG_COMPILE "is compiling"

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/22 20:28:38 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 14:42:51 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 #include "traceback.h"
 #include "context.h"
+#include "get.h"
 #include <stdlib.h>
 
-/* Validate that the context contains correct values. */
-static bool	context_validate(t_context *ctx)
+/* Returns 1 if the context contains incorrect values. */
+static int	context_validate(t_context *ctx)
 {
 	if (ctx->number_of_coders < 1
 		|| ctx->number_of_coders > 200
@@ -28,17 +29,15 @@ static bool	context_validate(t_context *ctx)
 		|| ctx->number_of_compiles_required < 1
 		|| ctx->dongle_cooldown < 1
 		|| ctx->scheduler == NONE)
-		return (false);
-	return (true);
+		return (1);
+	return (0);
 }
 
 int	setup_context(char const **args)
 {
 	t_context	*ctx;
 
-	ctx = malloc(sizeof(t_context));
-	if (ctx == NULL)
-		return (traceback(ERR_MEM, "context_new"), NULL);
+	ctx = context();
 	ctx->number_of_coders = atou(args[1]);
 	ctx->time_to_burnout = atou(args[2]);
 	ctx->time_to_compile = atou(args[3]);
@@ -47,13 +46,10 @@ int	setup_context(char const **args)
 	ctx->number_of_compiles_required = atou(args[6]);
 	ctx->dongle_cooldown = atou(args[7]);
 	ctx->scheduler = get_scheduler(args[8]);
-	if (!context_validate(ctx))
-		return (traceback(ERR_ARGV, "context_new"), free(ctx), NULL);
-	ctx->dongles = setup_dongles(ctx->number_of_coders);
-	if (!ctx->dongles)
-		return (traceback(ERR, "context_new"), free(ctx), NULL);
-	pthread_mutex_init(&ctx->print_mutex, NULL);
-	return (ctx);
+	if (context_validate(ctx))
+		return (traceback(ERR_ARGV, "setup_context"));
+	if (pthread_mutex_init(&ctx->print_mutex, NULL))
+		return (traceback(ERR_MTXI, "setup_context"));
 	return (0);
 }
 
@@ -68,8 +64,8 @@ t_dongle	*setup_dongles(int count)
 	i = 0;
 	while (i < count)
 	{
-		pthread_mutex_init(&dongles[i].mutex, NULL);
-		dongles[i].available = true;
+		if (pthread_mutex_init(&dongles[i].mutex, NULL))
+			return (free(dongles), traceback(ERR_MTXI, "setup_dongles"), NULL);
 		dongles[i].last_drop_time = 0;
 		++i;
 	}

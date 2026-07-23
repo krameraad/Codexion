@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:05:15 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/18 20:16:06 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/23 13:49:51 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 # define ERR "An error occurred."
 # define ERR_MEM "Failed to allocate memory."
-# define ERR_THRC "Failed to create a thread."
-# define ERR_THRJ "Failed to join a thread."
 # define ERR_ARGC "Number of arguments must be 8."
 # define ERR_ARGV "Arguments are invalid (must be ints above 0 and fifo/edf)."
+# define ERR_THRC "Failed to create a thread."
+# define ERR_THRJ "Failed to join a thread."
+# define ERR_MTXI "Failed to initialize a mutex."
+# define ERR_MTXD "Failed to destroy a mutex."
 
 /** @brief Red terminal formatting. */
 # define ESC_R "\033[91m"
