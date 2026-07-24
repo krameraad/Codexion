@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/19 18:37:58 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 14:42:51 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/24 14:25:09 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ t_dongle	*setup_dongles(int count)
 	{
 		if (pthread_mutex_init(&dongles[i].mutex, NULL))
 			return (free(dongles), traceback(ERR_MTXI, "setup_dongles"), NULL);
-		dongles[i].last_drop_time = 0;
+		if (pthread_cond_init(&dongles[i].cond, NULL))
+			return (free(dongles), traceback(ERR_CNDI, "setup_dongles"), NULL);
+		dongles[i].available_at = 0;
 		++i;
 	}
 	return (dongles);

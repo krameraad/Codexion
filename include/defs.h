@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/16 23:20:50 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 13:56:54 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/24 14:06:02 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ typedef struct s_dongle
 	/** @brief Mutex protecting access to this dongle's state. */
 	pthread_mutex_t	mutex;
 
+	pthread_cond_t	cond;
+
 	/** @brief Timestamp of the most recent release.
 	 * 
 	 * Used to enforce the configured cooldown period.
 	 */
-	time_t			last_drop_time;
+	time_t			available_at;
 }	t_dongle;
 
 /** @brief Represents a single coder participating in the simulation. */

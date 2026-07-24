@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/29 18:52:43 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 21:40:04 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/24 14:42:05 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,23 @@
 #include "traceback.h"
 #include "monitor.h"
 #include <stdlib.h>
+
+static int	dongles_destroy(t_dongle *dongles)
+{
+	int	i;
+
+	i = context()->number_of_coders - 1;
+	while (i >= 0)
+	{
+		if (pthread_mutex_destroy(&(dongles + i)->mutex))
+			return (traceback(ERR_MTXD, "dongles_destroy"));
+		if (pthread_cond_destroy(&(dongles + i)->cond))
+			return (traceback(ERR_CNDD, "dongles_destroy"));
+		--i;
+	}
+	free(dongles);
+	return (0);
+}
 
 static int	run_threads(t_coder *coders, int count)
 {
@@ -61,5 +78,5 @@ int	main(int argc, char const *argv[])
 	if (!coders)
 		return (free(dongles), traceback(ERR, "main"));
 	n = run_threads(coders, n);
-	return (free(coders), free(dongles), context_destroy() + n);
+	return (free(coders), dongles_destroy(dongles) + context_destroy() + n);
 }

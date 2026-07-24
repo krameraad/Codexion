@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/07/15 16:05:15 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 13:49:51 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/24 14:17:27 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define ERR_THRJ "Failed to join a thread."
 # define ERR_MTXI "Failed to initialize a mutex."
 # define ERR_MTXD "Failed to destroy a mutex."
+# define ERR_CNDI "Failed to initialize a condition variable."
+# define ERR_CNDD "Failed to destroy a condition variable."
 
 /** @brief Red terminal formatting. */
 # define ESC_R "\033[91m"

@@ -6,7 +6,7 @@
 /*   By: ekramer <ekramer@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/05/17 20:12:46 by ekramer       #+#    #+#                 */
-/*   Updated: 2026/07/23 21:44:44 by ekramer       ########   odam.nl         */
+/*   Updated: 2026/07/24 14:38:32 by ekramer       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,39 @@
 #include <unistd.h>
 #include <stdio.h>
 
-static void	drop_dongles(t_coder *coder)
+static void	drop_dongles(t_coder *coder, int cooldown)
 {
-	coder->dongle_left->last_drop_time = timestamp();
+	coder->dongle_left->available_at = timestamp() + cooldown;
 	pthread_mutex_unlock(&coder->dongle_left->mutex);
-	coder->dongle_right->last_drop_time = timestamp();
+	coder->dongle_right->available_at = timestamp() + cooldown;
 	pthread_mutex_unlock(&coder->dongle_right->mutex);
 }
 
-static void	take_dongles(t_coder *coder)
+static int	take_dongle(t_dongle *dongle, int id, int *abort)
 {
-	pthread_mutex_lock(&coder->dongle_left->mutex);
-	log_state(timestamp(), coder->id, LOG_DONGLE);
-	pthread_mutex_lock(&coder->dongle_right->mutex);
-	log_state(timestamp(), coder->id, LOG_DONGLE);
+	pthread_mutex_lock(&dongle->mutex);
+	if (*abort)
+		return (pthread_mutex_unlock(&dongle->mutex), 1);
+	log_state(timestamp(), id, LOG_DONGLE);
+	return (0);
 }
 
 static void	work(t_coder *coder, t_context *ctx)
 {
-	if (ctx->abort)
-		return ;
 	coder->last_compile = timestamp();
 	coder->state = COMPILING;
+	if (ctx->abort)
+		return ;
 	log_state(coder->last_compile, coder->id, LOG_COMPILE);
 	usleep(ctx->time_to_compile * 1000);
+	coder->state = DEBUGGING;
 	if (ctx->abort)
 		return ;
-	coder->state = DEBUGGING;
 	log_state(timestamp(), coder->id, LOG_DEBUG);
 	usleep(ctx->time_to_debug * 1000);
+	coder->state = REFACTORING;
 	if (ctx->abort)
 		return ;
-	coder->state = REFACTORING;
 	log_state(timestamp(), coder->id, LOG_REFACTOR);
 	usleep(ctx->time_to_refactor * 1000);
 	coder->state = FREE;
@@ -69,9 +70,15 @@ void	*coder(void *arg)
 		usleep(10000);
 	while (1)
 	{
-		take_dongles(coder);
+		if (take_dongle(coder->dongle_left, coder->id, &ctx->abort))
+			break ;
+		if (take_dongle(coder->dongle_right, coder->id, &ctx->abort))
+		{
+			pthread_mutex_unlock(&coder->dongle_left->mutex);
+			break ;
+		}
 		work(coder, ctx);
-		drop_dongles(coder);
+		drop_dongles(coder, ctx->dongle_cooldown);
 		if (ctx->abort)
 			break ;
 		coder->compiles += 1;
